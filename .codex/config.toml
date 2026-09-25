@@ -1,8 +1,8 @@
 # 必须放到本机 ~/.codex/config.toml（项目级 .codex/config.toml 会忽略 model_provider）
 # 解决 Unsupported model (empty)：WebSocket 会丢掉 model，必须 supports_websockets = false
-# 模型格式：{provider}/{model}；开源评论推荐 ppio/pa/gpt-5.5（不用昂贵的 azure_openai/gpt-5.2-codex）
+# 模型格式：{provider}/{model}
 
-model = "ppio/pa/gpt-5.5"
+model = "hippo/gpt-5.6-sol"
 model_provider = "mify"
 model_reasoning_effort = "high"
 

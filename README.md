@@ -16,7 +16,7 @@ bash scripts/install-codex-mify.sh
 配置要点（见 `.codex/config.toml`）：
 
 - `model_provider = "mify"`
-- `model = "ppio/pa/gpt-5.5"`（`{provider}/{model}`，不能空）
+- `model = "hippo/gpt-5.6-sol"`（`{provider}/{model}`，不能空）
 - `supports_websockets = false`（强制 HTTPS，避免空 model）
 - `base_url = "https://api.llm.mioffice.cn/v1"`
 - `requires_openai_auth = true`
