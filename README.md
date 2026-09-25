@@ -24,3 +24,11 @@ bash scripts/install-codex-mify.sh
 不用 `azure_openai/gpt-5.2-codex`（评论：费用过高、不允许）。
 
 安装后**完全退出并重启** Codex / VS Code 插件，再发一条消息验证。
+
+自检（在本仓库目录执行）：
+
+```bash
+bash scripts/check-codex-mify.sh
+```
+
+若报 `Unsupported model (empty)`，多半是 **本机 `~/.codex/config.toml` 没配对**：`model` 为空，或 `model_provider` 仍是默认 `openai`（只改了项目里的 `.codex/config.toml` 不够）。
