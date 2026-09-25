@@ -1,0 +1,22 @@
+# 保留「Sign in with ChatGPT」登录，同时把请求发到 MiMo（需 CC Switch 或手动维护 auth.json）
+# 参考: https://www.codex-docs.com/docs/third-party-models
+# 一般更推荐纯 API Key 方案: config.token-plan.toml
+
+model_catalog_json = "~/.codex/model-catalogs.json"
+model = "mimo-v2.6-pro"
+model_provider = "mimo"
+model_reasoning_effort = "high"
+
+model_supports_reasoning_summaries = true
+model_reasoning_summary = "none"
+model_context_window = 1048576
+
+web_search = "disabled"
+
+[model_providers.mimo]
+name = "mimo"
+base_url = "https://token-plan-cn.xiaomimimo.com/v1"
+wire_api = "responses"
+requires_openai_auth = true
+experimental_bearer_token = "tp-your-api-key-here"
+request_max_retries = 4

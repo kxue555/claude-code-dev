@@ -60,12 +60,59 @@ export MIMO_API_KEY="你的密钥"
 | `model_catalog_json = "~/.codex/model-catalogs.json"` | 模型元数据路径 |
 | `wire_api = "responses"` | MiMo 要求使用 Responses API |
 
+## 模型下拉仍是 GPT-5 / 官方默认选项？
+
+这说明 Codex **仍在用默认提供商 `openai`**，没有读到你的 MiMo 自定义模型目录。按下面顺序处理：
+
+### 1. 配置必须写在用户目录（最常见漏项）
+
+Codex **只在** `~/.codex/config.toml` 读取 `model_provider`、`model_catalog_json`、`[model_providers.*]`。  
+写在项目里的 `.codex/config.toml` **不会生效**，界面会继续显示官方模型列表。
+
+```bash
+bash scripts/setup-codex.sh token-plan   # 或 pay-as-you-go
+bash scripts/verify-codex-config.sh      # 自检
+```
+
+### 2. 必须显式切换到自定义提供商
+
+`config.toml` 里需要同时有（缺一不可）：
+
+```toml
+model_provider = "mimo"          # 默认是 openai，不设就一直是官方模型
+model = "mimo-v2.6-pro"
+model_catalog_json = "~/.codex/model-catalogs.json"
+```
+
+并存在文件 `~/.codex/model-catalogs.json`（本仓库 `codex/model-catalogs.json` 可复制过去）。
+
+### 3. 环境变量与重启
+
+```bash
+export MIMO_API_KEY="tp-或sk-开头的密钥"
+```
+
+修改配置后 **完全退出** Codex 桌面端或 VS Code（不是只关面板），再重新打开。
+
+### 4. 如何切换模型
+
+- **CLI**：进入 `codex` 后输入 **`/model`**，应出现 `mimo-v2.6-pro`、`mimo-v2.6-flash` 等。
+- **桌面端**：部分版本下拉仍只显示官方 GPT（已知 UI 过滤问题），但实际请求以 `config.toml` 里的 `model` 为准；界面可能显示为 **Custom** 而非 MiMo 名称。以 CLI `/model` 或发一条消息是否走 MiMo 为准。
+
+### 5. 仍登录 ChatGPT 时
+
+若用「Sign in with ChatGPT」登录，未改 `model_provider` 时列表一定是官方模型。可选：
+
+- **推荐**：用 `MIMO_API_KEY` + `config.token-plan.toml`（纯 MiMo API，不依赖 ChatGPT 账号选模型）
+- **保留 ChatGPT 登录**：使用 `codex/config.token-plan.keep-chatgpt-login.toml`，并参考 [第三方模型接入](https://www.codex-docs.com/docs/third-party-models) 配置 `requires_openai_auth` + `experimental_bearer_token`
+
 ## 验证
 
 ```bash
 codex --version
+bash scripts/verify-codex-config.sh
 codex
-# 在 CLI 中可执行 /model 查看 MiMo 模型列表
+# 在 CLI 中执行 /model 查看 MiMo 模型列表
 ```
 
 若出现 **“custom tools require MiMo freeform Responses lite mode”**，说明需要本仓库提供的 `model-catalogs.json`（内含 `use_responses_lite` 等字段），安装后 **重启 Codex**。
