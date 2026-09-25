@@ -34,11 +34,31 @@ bash scripts/configure-mify.sh
 - `model_provider = "mify"`，接口 `https://api.llm.mioffice.cn/v1`
 - `model_reasoning_effort` 只能用 `high`，不能用 `max`
 - 非 GPT 模型必须 `web_search = "disabled"`，并关闭 `features.apply_patch_freeform`
-- `requires_openai_auth = true`，用 Mify 的 API Key 登录：
+- `requires_openai_auth = true`，并用 API Key 登录：
 
 ```bash
 printf '%s' "$MIFY_API_KEY" | codex login --with-api-key
 ```
+
+只登录还不够。provider 里要在 `base_url` 下面加上 `env_key`，否则桌面版会报找不到模型元数据（`Unsupported model (empty)`）：
+
+```toml
+[model_providers.mify]
+name = "mify"
+base_url = "https://api.llm.mioffice.cn/v1"
+env_key = "PROXY_API_KEY"
+wire_api = "responses"
+requires_openai_auth = true
+```
+
+把中转密钥写进 `PROXY_API_KEY`，并让 shell 启动时加载。密钥不要提交到仓库：
+
+```bash
+echo 'export PROXY_API_KEY="sk-xxxx你的中转密钥"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+桌面版不会读已经打开的终端，改完后要重新打开 Codex，进程里才能看到 `PROXY_API_KEY`。
 
 ## 使用 Codex
 

@@ -18,6 +18,7 @@ apply_patch_freeform = false
 [model_providers.mify]
 name = "mify"
 base_url = "https://api.llm.mioffice.cn/v1"
+env_key = "PROXY_API_KEY"
 wire_api = "responses"
 requires_openai_auth = true
 request_max_retries = 4
