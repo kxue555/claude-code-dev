@@ -10,6 +10,7 @@
     }
   ],
   "egressAllowlist": [
+    "api.llm.mioffice.cn",
     "open.feishu.cn",
     "accounts.feishu.cn",
     "mcp.feishu.cn",

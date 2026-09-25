@@ -1,0 +1,25 @@
+model = "amber_ai/gpt-5.6-sol"
+model_provider = "mify"
+model_reasoning_effort = "high" # 重要：不支持 max，否则会报错
+
+model_reasoning_summary = "detailed"
+model_verbosity = "high"
+model_supports_reasoning_summaries = true
+model_reasoning_summary_format = "experimental"
+model_context_window = 272000
+
+# 重要：非 GPT 模型需要关掉网页搜索，否则会报错
+web_search = "disabled"
+
+[features]
+# 重要：非 GPT 模型需要关闭 freeform apply_patch，否则会报错
+apply_patch_freeform = false
+
+[model_providers.mify]
+name = "mify"
+base_url = "https://api.llm.mioffice.cn/v1"
+wire_api = "responses"
+requires_openai_auth = true
+request_max_retries = 4
+stream_max_retries = 10
+stream_idle_timeout_ms = 300000

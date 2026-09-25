@@ -21,6 +21,25 @@ codex doctor
 codex login status
 ```
 
+## Mify provider
+
+桌面版和 CLI 共用 `~/.codex/config.toml`。仓库里的模板是 `config/codex-mify.toml`，模型为 `amber_ai/gpt-5.6-sol`。
+
+```bash
+bash scripts/configure-mify.sh
+```
+
+配置要点：
+
+- `model_provider = "mify"`，接口 `https://api.llm.mioffice.cn/v1`
+- `model_reasoning_effort` 只能用 `high`，不能用 `max`
+- 非 GPT 模型必须 `web_search = "disabled"`，并关闭 `features.apply_patch_freeform`
+- `requires_openai_auth = true`，用 Mify 的 API Key 登录：
+
+```bash
+printf '%s' "$MIFY_API_KEY" | codex login --with-api-key
+```
+
 ## 使用 Codex
 
 ```bash
