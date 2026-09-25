@@ -1,12 +1,9 @@
-# 评论里的修法：WebSocket 模式下请求会丢掉 model，网关就返回
-# Unsupported model (empty)。改走 HTTPS（supports_websockets = false），
-# 并显式写上 {provider}/{model}。
-# 不用 azure_openai/gpt-5.2-codex（评论：费用太高，不让用）。
-# 模型用 Jie Yu 评论里的 ppio/pa/gpt-5.5；地址用回复里确认的 Mify 网关。
-# provider 相关键要放在用户级 ~/.codex/config.toml，项目级 .codex/config.toml 会被忽略。
+# 必须放到本机 ~/.codex/config.toml（项目级 .codex/config.toml 会忽略 model_provider）
+# 解决 Unsupported model (empty)：WebSocket 会丢掉 model，必须 supports_websockets = false
+# 模型格式：{provider}/{model}；开源评论推荐 ppio/pa/gpt-5.5（不用昂贵的 azure_openai/gpt-5.2-codex）
 
 model = "ppio/pa/gpt-5.5"
-model_provider = "openai_http"
+model_provider = "mify"
 model_reasoning_effort = "high"
 
 model_reasoning_summary = "detailed"
@@ -15,7 +12,6 @@ model_supports_reasoning_summaries = true
 model_reasoning_summary_format = "experimental"
 model_context_window = 272000
 
-# 走 Mify 时关掉内置 web search，否则非直连 OpenAI 会报错
 web_search = "disabled"
 
 [features]
@@ -24,8 +20,8 @@ apply_patch_freeform = false
 [agents]
 default_subagent_model = "deepseek/deepseek-flash"
 
-[model_providers.openai_http]
-name = "OpenAI HTTP only"
+[model_providers.mify]
+name = "mify"
 base_url = "https://api.llm.mioffice.cn/v1"
 wire_api = "responses"
 supports_websockets = false
