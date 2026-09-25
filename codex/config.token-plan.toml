@@ -1,0 +1,19 @@
+# MiMo Token Plan — 复制到 ~/.codex/config.toml
+# 文档: https://mimo.mi.com/docs/zh-CN/tokenplan/integration/codex-configuration
+
+model_catalog_json = "~/.codex/model-catalogs.json"
+model = "mimo-v2.6-pro"
+model_provider = "mimo"
+model_reasoning_effort = "high"
+
+model_supports_reasoning_summaries = true
+model_reasoning_summary = "none"
+model_context_window = 1048576
+
+web_search = "disabled"
+
+[model_providers.mimo]
+name = "mimo"
+base_url = "https://token-plan-cn.xiaomimimo.com/v1"
+env_key = "MIMO_API_KEY"
+wire_api = "responses"
