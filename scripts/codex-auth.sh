@@ -34,5 +34,5 @@ if [[ -n "${PROXY_API_KEY:-}" ]]; then
   exit 0
 fi
 
-echo "No Codex credentials found. Set OPENAI_API_KEY or CODEX_ACCESS_TOKEN in environment secrets."
+echo "No Codex credentials found. Set PROXY_API_KEY, OPENAI_API_KEY, or CODEX_ACCESS_TOKEN in environment secrets."
 exit 1
