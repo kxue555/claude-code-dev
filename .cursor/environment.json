@@ -1,6 +1,6 @@
 {
   "name": "Codex Development",
   "user": "ubuntu",
-  "install": "bash scripts/install-codex.sh && bash scripts/codex-auth.sh",
+  "install": "bash scripts/install-codex.sh",
   "start": "bash scripts/codex-auth.sh || true"
 }
