@@ -34,6 +34,22 @@ codex exec "分析这个项目的结构"
 codex review
 ```
 
+## 飞书 MCP（本地 OpenAPI，用户身份）
+
+Cloud Agent 通过 `.cursor/mcp.json` 启动 `@larksuiteoapi/lark-mcp`，并强制 `--token-mode user_access_token`，文档以你的个人身份读写。
+
+1. 在 [飞书开放平台](https://open.feishu.cn/app) 创建自建应用，拿到 App ID、App Secret。
+2. 开通权限：`docx:document:readonly`、`docx:document:write_only`、`wiki:wiki:readonly`、`drive:drive`。
+3. 安全设置里把重定向 URL 设为 `http://localhost:3000/callback`，并打开发布版本。
+4. 在 Cloud Agent 环境密钥中写入 `FEISHU_APP_ID`、`FEISHU_APP_SECRET`。
+5. 运行登录，打开终端里的授权链接并扫码：
+
+```bash
+bash scripts/lark-mcp-login.sh
+```
+
+看到 `success` 后，重启 Agent，即可读取飞书云文档和知识库。
+
 ## Cloud Agent 环境
 
 本仓库包含 `.cursor/environment.json`，Cloud Agent 启动时会自动：

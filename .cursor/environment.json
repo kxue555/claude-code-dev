@@ -2,5 +2,17 @@
   "name": "Codex Development",
   "user": "ubuntu",
   "install": "bash scripts/install-codex.sh",
-  "start": "bash scripts/codex-auth.sh || true"
+  "start": "bash scripts/codex-auth.sh || true",
+  "mcpServerAllowlist": [
+    {
+      "name": "lark-mcp",
+      "command": "npx"
+    }
+  ],
+  "egressAllowlist": [
+    "open.feishu.cn",
+    "accounts.feishu.cn",
+    "mcp.feishu.cn",
+    "open.larkoffice.com"
+  ]
 }
