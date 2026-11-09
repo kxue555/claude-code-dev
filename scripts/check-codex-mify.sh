@@ -7,9 +7,10 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+STATUS=0
 ok() { echo -e "${GREEN}OK${NC}  $*"; }
 warn() { echo -e "${YELLOW}WARN${NC}  $*"; }
-fail() { echo -e "${RED}FAIL${NC}  $*"; }
+fail() { echo -e "${RED}FAIL${NC}  $*"; STATUS=1; }
 
 HOME_CFG="${HOME}/.codex/config.toml"
 PROJECT_CFG=""
@@ -66,6 +67,11 @@ else
   ok "model_provider = mify"
 fi
 
+if [[ "${model}" == "moonshot/kimi-k3.1-pro" ]]; then
+  fail "model = moonshot/kimi-k3.1-pro，该模型在 Mify 上 ping 不通"
+  echo "      请改成 ppio/anthropic/claude-sonnet-5-5（或 opus / haiku），然后重新安装配置"
+fi
+
 if has_section "model_providers.mify"; then
   if grep -A20 '^\[model_providers\.mify\]' "${HOME_CFG}" | grep -q 'supports_websockets = false'; then
     ok "supports_websockets = false（避免请求不带 model）"
@@ -86,6 +92,47 @@ if [[ -n "${PROJECT_CFG}" ]]; then
   echo "      只有 model 等少数项可在项目级覆盖；网关 provider 必须在 ~/.codex/config.toml"
 fi
 
+catalog_cfg="$(get_toml model_catalog_json)"
+if [[ -z "${catalog_cfg}" ]]; then
+  fail "缺少 model_catalog_json → /model 不会列出 PPIO Claude 模型"
+else
+  ok "model_catalog_json = \"${catalog_cfg}\""
+  catalog_path="${catalog_cfg/#\~/${HOME}}"
+  if [[ ! -f "${catalog_path}" ]]; then
+    fail "模型目录不存在: ${catalog_path}"
+  else
+    if python3 - "${catalog_path}" <<'PY'
+import json, sys
+path = sys.argv[1]
+data = json.load(open(path, encoding="utf-8"))
+models = data.get("models") or []
+slugs = [m.get("slug") for m in models]
+required = [
+    "ppio/anthropic/claude-opus-5-5",
+    "ppio/anthropic/claude-sonnet-5-5",
+    "ppio/anthropic/claude-haiku-5-5",
+]
+missing = [slug for slug in required if slug not in slugs]
+if missing:
+    print("模型目录缺少: " + ", ".join(missing), file=sys.stderr)
+    sys.exit(1)
+if "moonshot/kimi-k3.1-pro" in slugs:
+    print("模型目录仍包含 ping 不通的 moonshot/kimi-k3.1-pro", file=sys.stderr)
+    sys.exit(1)
+for model in models:
+    for key in ("display_name", "supported_reasoning_levels", "shell_type", "visibility", "base_instructions", "truncation_policy"):
+        if not model.get(key):
+            print(f"{model.get('slug')} 缺少 {key}", file=sys.stderr)
+            sys.exit(1)
+PY
+    then
+      ok "模型目录包含 PPIO Claude Opus / Sonnet / Haiku 5.5"
+    else
+      fail "模型目录校验未通过"
+    fi
+  fi
+fi
+
 if [[ -f "${HOME}/.codex/auth.json" ]]; then
   ok "存在 ~/.codex/auth.json（requires_openai_auth 需要已登录）"
 else
@@ -93,5 +140,9 @@ else
 fi
 
 echo
-echo "若以上有 FAIL：先 bash scripts/install-codex-mify.sh，再完全退出并重启 Codex。"
-echo "在 Codex 里可执行 /status 或 /debug-config 看最终生效的 model 与 provider。"
+if [[ "${STATUS}" -ne 0 ]]; then
+  echo "若以上有 FAIL：先 bash scripts/install-codex-mify.sh，再完全退出并重启 Codex。"
+  exit 1
+fi
+echo "配置看起来正确。请完全退出并重启 Codex。"
+echo "在 Codex 里执行 /model，应能看到 Claude Opus / Sonnet / Haiku 5.5。"

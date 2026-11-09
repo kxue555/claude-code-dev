@@ -1,0 +1,156 @@
+{
+  "models": [
+    {
+      "slug": "ppio/anthropic/claude-opus-5-5",
+      "display_name": "Claude Opus 5.5",
+      "description": "PPIO Claude Opus 5.5，经 Mify 调用",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "更快，推理更轻"
+        },
+        {
+          "effort": "medium",
+          "description": "速度和推理深度折中"
+        },
+        {
+          "effort": "high",
+          "description": "复杂问题用更深的推理"
+        }
+      ],
+      "shell_type": "unified_exec",
+      "visibility": "list",
+      "supported_in_api": true,
+      "priority": 0,
+      "availability_nux": null,
+      "upgrade": null,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "context_window": 1000000,
+      "max_context_window": 1000000,
+      "experimental_supported_tools": [],
+      "input_modalities": ["text", "image"],
+      "base_instructions": "You are Claude Opus 5.5, an AI coding assistant. Today's date: {date}."
+    },
+    {
+      "slug": "ppio/anthropic/claude-sonnet-5-5",
+      "display_name": "Claude Sonnet 5.5",
+      "description": "PPIO Claude Sonnet 5.5，经 Mify 调用",
+      "default_reasoning_level": "high",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "更快，推理更轻"
+        },
+        {
+          "effort": "medium",
+          "description": "速度和推理深度折中"
+        },
+        {
+          "effort": "high",
+          "description": "复杂问题用更深的推理"
+        }
+      ],
+      "shell_type": "unified_exec",
+      "visibility": "list",
+      "supported_in_api": true,
+      "priority": 1,
+      "availability_nux": null,
+      "upgrade": null,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "context_window": 1000000,
+      "max_context_window": 1000000,
+      "experimental_supported_tools": [],
+      "input_modalities": ["text", "image"],
+      "base_instructions": "You are Claude Sonnet 5.5, an AI coding assistant. Today's date: {date}."
+    },
+    {
+      "slug": "ppio/anthropic/claude-haiku-5-5",
+      "display_name": "Claude Haiku 5.5",
+      "description": "PPIO Claude Haiku 5.5，经 Mify 调用",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "更快，推理更轻"
+        },
+        {
+          "effort": "medium",
+          "description": "速度和推理深度折中"
+        },
+        {
+          "effort": "high",
+          "description": "复杂问题用更深的推理"
+        }
+      ],
+      "shell_type": "unified_exec",
+      "visibility": "list",
+      "supported_in_api": true,
+      "priority": 2,
+      "availability_nux": null,
+      "upgrade": null,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "context_window": 1000000,
+      "max_context_window": 1000000,
+      "experimental_supported_tools": [],
+      "input_modalities": ["text", "image"],
+      "base_instructions": "You are Claude Haiku 5.5, an AI coding assistant. Today's date: {date}."
+    },
+    {
+      "slug": "hippo/gpt-5.6-sol",
+      "display_name": "GPT-5.6 Sol",
+      "description": "Hippo GPT-5.6 Sol，经 Mify 调用",
+      "default_reasoning_level": "high",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "更快，推理更轻"
+        },
+        {
+          "effort": "medium",
+          "description": "速度和推理深度折中"
+        },
+        {
+          "effort": "high",
+          "description": "复杂问题用更深的推理"
+        }
+      ],
+      "shell_type": "unified_exec",
+      "visibility": "list",
+      "supported_in_api": true,
+      "priority": 10,
+      "availability_nux": null,
+      "upgrade": null,
+      "support_verbosity": true,
+      "default_verbosity": "high",
+      "apply_patch_tool_type": null,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "context_window": 272000,
+      "max_context_window": 272000,
+      "experimental_supported_tools": [],
+      "input_modalities": ["text", "image"],
+      "base_instructions": "You are a coding assistant. Today's date: {date}."
+    }
+  ]
+}
