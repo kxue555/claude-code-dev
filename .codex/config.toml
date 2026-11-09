@@ -1,0 +1,38 @@
+# 必须放到本机 ~/.codex/config.toml（项目级 .codex/config.toml 会忽略 model_provider）
+# 解决 Unsupported model (empty)：WebSocket 会丢掉 model，必须 supports_websockets = false
+# 模型格式：{provider}/{model}，经 Mify 网关 https://api.llm.mioffice.cn/v1
+#
+# /model 可选（见 model-catalogs.json）：
+#   ppio/anthropic/claude-opus-5-5
+#   ppio/anthropic/claude-sonnet-5-5
+#   ppio/anthropic/claude-haiku-5-5
+#   hippo/gpt-5.6-sol
+# 不使用 moonshot/kimi-k3.1-pro：该模型在 Mify 上 ping 不通。
+
+model_catalog_json = "~/.codex/model-catalogs.json"
+model = "ppio/anthropic/claude-sonnet-5-5"
+model_provider = "mify"
+model_reasoning_effort = "high"
+
+model_reasoning_summary = "detailed"
+model_verbosity = "high"
+model_supports_reasoning_summaries = true
+model_reasoning_summary_format = "experimental"
+
+web_search = "disabled"
+
+[features]
+apply_patch_freeform = false
+
+[agents]
+default_subagent_model = "deepseek/deepseek-flash"
+
+[model_providers.mify]
+name = "mify"
+base_url = "https://api.llm.mioffice.cn/v1"
+wire_api = "responses"
+supports_websockets = false
+requires_openai_auth = true
+request_max_retries = 4
+stream_max_retries = 10
+stream_idle_timeout_ms = 300000
