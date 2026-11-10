@@ -7,8 +7,9 @@
 #   ppio/anthropic/claude-sonnet-5-5
 #   ppio/anthropic/claude-haiku-5-5
 #   ppio/pa/gpt-5.6-sol
+#   ppio/pa/gpt-6-astra          ← 桌面版官方 gpt-6-astra 换成这条
 #   hippo/gpt-5.6-sol
-# 不使用 moonshot/kimi-k3.1-pro：该模型在 Mify 上 ping 不通。
+# 不使用官方 slug gpt-6-astra，也不使用 moonshot/kimi-k3.1-pro（Mify 上 ping 不通）。
 
 model_catalog_json = "~/.codex/model-catalogs.json"
 model = "ppio/anthropic/claude-sonnet-5-5"
