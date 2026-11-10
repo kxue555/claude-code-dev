@@ -1,0 +1,11 @@
+{
+  "model": "amber_ai/claude-sonnet-5",
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.llm.mioffice.cn/anthropic",
+    "ANTHROPIC_AUTH_TOKEN": "sk-xxxx",
+    "ANTHROPIC_MODEL": "amber_ai/claude-sonnet-5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "amber_ai/claude-sonnet-5",
+    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
+  },
+  "enableArtifact": false
+}

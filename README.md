@@ -30,7 +30,20 @@ bash scripts/install-codex-mify.sh
 | `ppio/anthropic/claude-sonnet-5-5` | Claude Sonnet 5.5，默认模型 |
 | `ppio/anthropic/claude-haiku-5-5` | Claude Haiku 5.5，1M 上下文 |
 | `ppio/pa/gpt-5.6-sol` | PPIO GPT-5.6 Sol，272k 上下文 |
+| `ppio/pa/gpt-6-astra` | 桌面版 GPT-6-Astra，替代官方 `gpt-6-astra`，272k（最大 872k） |
 | `hippo/gpt-5.6-sol` | 之前的默认模型，仍保留 |
+
+`model_catalog_json` 会替换 Codex 自带模型目录。桌面版里原来的 `gpt-6-astra` 不再出现，对应条目是 `ppio/pa/gpt-6-astra`。
+
+## Claude Code Sonnet
+
+项目级 `.claude/settings.json` 把 Sonnet 指到 Mify 上的 `amber_ai/claude-sonnet-5`：
+
+- `model`
+- `ANTHROPIC_MODEL`
+- `ANTHROPIC_DEFAULT_SONNET_MODEL`
+
+接口是 `https://api.llm.mioffice.cn/anthropic`。`ANTHROPIC_AUTH_TOKEN` 在仓库里是占位符 `sk-xxxx`，使用前换成自己的密钥。Opus / Haiku 别名没有改。
 
 不使用 `moonshot/kimi-k3.1-pro`：该模型在 Mify 上 ping 不通。也不用 `azure_openai/gpt-5.2-codex`（费用过高、不允许）。
 

@@ -112,10 +112,14 @@ required = [
     "ppio/anthropic/claude-sonnet-5-5",
     "ppio/anthropic/claude-haiku-5-5",
     "ppio/pa/gpt-5.6-sol",
+    "ppio/pa/gpt-6-astra",
 ]
 missing = [slug for slug in required if slug not in slugs]
 if missing:
     print("模型目录缺少: " + ", ".join(missing), file=sys.stderr)
+    sys.exit(1)
+if "gpt-6-astra" in slugs:
+    print("模型目录仍包含官方 gpt-6-astra，应改为 ppio/pa/gpt-6-astra", file=sys.stderr)
     sys.exit(1)
 if "moonshot/kimi-k3.1-pro" in slugs:
     print("模型目录仍包含 ping 不通的 moonshot/kimi-k3.1-pro", file=sys.stderr)
@@ -127,10 +131,42 @@ for model in models:
             sys.exit(1)
 PY
     then
-      ok "模型目录包含 PPIO Claude 5.5 与 ppio/pa/gpt-5.6-sol"
+      ok "模型目录包含 PPIO Claude 5.5、ppio/pa/gpt-5.6-sol 与 ppio/pa/gpt-6-astra"
     else
       fail "模型目录校验未通过"
     fi
+  fi
+fi
+
+claude_settings=""
+if [[ -f ".claude/settings.json" ]]; then
+  claude_settings=".claude/settings.json"
+elif [[ -f "${PWD}/.claude/settings.json" ]]; then
+  claude_settings="${PWD}/.claude/settings.json"
+fi
+if [[ -z "${claude_settings}" ]]; then
+  fail "未找到 .claude/settings.json，Claude Code 的 Sonnet 没有换成 amber_ai/claude-sonnet-5"
+else
+  if python3 - "${claude_settings}" <<'PY'
+import json, sys
+path = sys.argv[1]
+data = json.load(open(path, encoding="utf-8"))
+env = data.get("env") or {}
+expected = "amber_ai/claude-sonnet-5"
+checks = {
+    "model": data.get("model"),
+    "ANTHROPIC_MODEL": env.get("ANTHROPIC_MODEL"),
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": env.get("ANTHROPIC_DEFAULT_SONNET_MODEL"),
+}
+bad = [name for name, value in checks.items() if value != expected]
+if bad:
+    print("Claude Code Sonnet 未指向 amber_ai/claude-sonnet-5: " + ", ".join(bad), file=sys.stderr)
+    sys.exit(1)
+PY
+  then
+    ok "Claude Code Sonnet = amber_ai/claude-sonnet-5"
+  else
+    fail "Claude Code Sonnet 配置不正确"
   fi
 fi
 
@@ -146,4 +182,4 @@ if [[ "${STATUS}" -ne 0 ]]; then
   exit 1
 fi
 echo "配置看起来正确。请完全退出并重启 Codex。"
-echo "在 Codex 里执行 /model，应能看到 Claude Opus / Sonnet / Haiku 5.5 和 ppio/pa/gpt-5.6-sol。"
+echo "在 Codex 里执行 /model，应能看到 ppio/pa/gpt-6-astra（不再是官方 gpt-6-astra）。"
