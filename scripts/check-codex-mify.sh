@@ -111,6 +111,7 @@ required = [
     "ppio/anthropic/claude-opus-5-5",
     "ppio/anthropic/claude-sonnet-5-5",
     "ppio/anthropic/claude-haiku-5-5",
+    "ppio/pa/gpt-5.6-sol",
 ]
 missing = [slug for slug in required if slug not in slugs]
 if missing:
@@ -126,7 +127,7 @@ for model in models:
             sys.exit(1)
 PY
     then
-      ok "模型目录包含 PPIO Claude Opus / Sonnet / Haiku 5.5"
+      ok "模型目录包含 PPIO Claude 5.5 与 ppio/pa/gpt-5.6-sol"
     else
       fail "模型目录校验未通过"
     fi
@@ -145,4 +146,4 @@ if [[ "${STATUS}" -ne 0 ]]; then
   exit 1
 fi
 echo "配置看起来正确。请完全退出并重启 Codex。"
-echo "在 Codex 里执行 /model，应能看到 Claude Opus / Sonnet / Haiku 5.5。"
+echo "在 Codex 里执行 /model，应能看到 Claude Opus / Sonnet / Haiku 5.5 和 ppio/pa/gpt-5.6-sol。"

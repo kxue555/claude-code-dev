@@ -37,6 +37,6 @@ echo "请确认："
 echo "  1. model / model_provider 已生效（打开新终端跑: grep -E '^(model|model_provider)' ~/.codex/config.toml）"
 echo "  2. Codex 已用公司账号登录（requires_openai_auth = true）"
 echo "  3. 完全退出并重启 Codex / IDE 插件后再试"
-echo "  4. 在 Codex 里执行 /model，应能看到 Claude Opus / Sonnet / Haiku 5.5"
+echo "  4. 在 Codex 里执行 /model，应能看到 Claude Opus / Sonnet / Haiku 5.5 和 ppio/pa/gpt-5.6-sol"
 echo
 grep -E '^(model|model_provider|model_catalog_json)[[:space:]]*=' "${DST}" || true
