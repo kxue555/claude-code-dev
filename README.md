@@ -29,6 +29,7 @@ bash scripts/install-codex-mify.sh
 | `ppio/anthropic/claude-opus-5-5` | Claude Opus 5.5，1M 上下文 |
 | `ppio/anthropic/claude-sonnet-5-5` | Claude Sonnet 5.5，默认模型 |
 | `ppio/anthropic/claude-haiku-5-5` | Claude Haiku 5.5，1M 上下文 |
+| `ppio/pa/gpt-5.6-sol` | PPIO GPT-5.6 Sol，272k 上下文 |
 | `hippo/gpt-5.6-sol` | 之前的默认模型，仍保留 |
 
 不使用 `moonshot/kimi-k3.1-pro`：该模型在 Mify 上 ping 不通。也不用 `azure_openai/gpt-5.2-codex`（费用过高、不允许）。
